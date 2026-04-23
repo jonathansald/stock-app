@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { TickerSearch } from "@/components/portfolio/TickerSearch";
 import { RiskToleranceSlider } from "@/components/portfolio/RiskToleranceSlider";
@@ -13,6 +13,14 @@ import { X, TrendingUp, Settings2, Clock, Bookmark, Check } from "lucide-react";
 type RiskProfile = "conservative" | "moderate" | "aggressive";
 
 export default function PortfolioPage() {
+  return (
+    <Suspense>
+      <PortfolioPageInner />
+    </Suspense>
+  );
+}
+
+function PortfolioPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { items: watchlistItems } = useWatchlist();
