@@ -1,0 +1,18 @@
+TTL = {
+    "quote": 5 * 60,
+    "history": 60 * 60,
+    "news": 60 * 60,
+    "analyst": 4 * 60 * 60,
+    "screener": 2 * 60 * 60,
+    "financials": 24 * 60 * 60,
+    "profile": 24 * 60 * 60,
+    "metrics": 4 * 60 * 60,
+    "earnings": 4 * 60 * 60,
+    "search": 60 * 60,
+    "sectors": 24 * 60 * 60,
+    "dcf_prefill": 4 * 60 * 60,
+    "comparables": 4 * 60 * 60,
+    "correlation": 4 * 60 * 60,
+    "market_overview": 5 * 60,
+    "ai_summary": 60 * 60,
+}
