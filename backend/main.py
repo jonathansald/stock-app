@@ -1,4 +1,7 @@
 import os
+import threading
+import time
+import httpx
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
@@ -6,6 +9,19 @@ from database.db import init_db
 from routers import screener, stocks, financials, portfolio, dcf, news, market
 
 load_dotenv()
+
+
+def _keepalive():
+    """Ping our own /health every 10 min so Render free tier never sleeps."""
+    url = os.getenv("RENDER_EXTERNAL_URL")
+    if not url:
+        return
+    while True:
+        time.sleep(600)
+        try:
+            httpx.get(f"{url}/health", timeout=10)
+        except Exception:
+            pass
 
 app = FastAPI(title="Stock Screener API", version="1.0.0")
 
@@ -34,6 +50,8 @@ app.include_router(market.router)
 @app.on_event("startup")
 async def startup():
     init_db()
+    t = threading.Thread(target=_keepalive, daemon=True)
+    t.start()
 
 
 @app.get("/health")
