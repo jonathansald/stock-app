@@ -6,7 +6,9 @@ import type {
   MarketOverview, AIMarketSummary,
 } from "./types";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+// Empty string = use relative URLs (proxied through Next.js to localhost:8000).
+// Set NEXT_PUBLIC_API_URL to point directly to a remote backend in production.
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 async function fetcher<T>(path: string): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, { next: { revalidate: 0 } });
